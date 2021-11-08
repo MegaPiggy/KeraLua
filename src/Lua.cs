@@ -127,6 +127,14 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Close the to-be-closed slot at the given index and set its value to nil. The index must be the last index previously marked to be closed ( see <see cref="ToClose(int)"/> ) that is still active (that is, not closed yet).
+        /// </summary>
+        public void CloseSlot(int index)
+        {
+            NativeMethods.lua_closeslot(_luaState, index);
+        }
+
+        /// <summary>
         /// Dispose the lua context (calling Close)
         /// </summary>
         public void Dispose()
@@ -1142,6 +1150,16 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Sets a new limit for the C stack. This limit controls how deeply nested calls can go in Lua, with the intent of avoiding a stack overflow.
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <returns>the old limit in case of success, or zero in case of error.</returns>
+        public int SetCStackLimit(uint limit)
+        {
+            return NativeMethods.lua_setcstacklimit(_luaState, limit);
+        }
+
+        /// <summary>
         /// Does the equivalent to t[k] = v, where t is the value at the given index and v is the value at the top of the stack.
         /// </summary>
         /// <param name="index"></param>
@@ -1416,7 +1434,7 @@ namespace KeraLua
         public string ToString(int index, bool callMetamethod)
         {
             byte[] buffer = ToBuffer(index, callMetamethod);
-            if(buffer == null)
+            if (buffer == null)
                 return null;
             return Encoding.GetString(buffer);
         }
