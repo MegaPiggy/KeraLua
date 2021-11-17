@@ -14,7 +14,7 @@ using lua_Reader = System.IntPtr;
 using lua_Alloc = System.IntPtr;
 using lua_Hook = System.IntPtr;
 using lua_Integer = System.Int64;
-using lua_Unsigned = System.UInt64;
+using lua_Unsigned = System.UIntPtr;
 using lua_Number = System.Double;
 using lua_Number_ptr = System.IntPtr;
 using lua_Debug = System.IntPtr;
@@ -240,7 +240,7 @@ namespace KeraLua
         internal static extern int lua_rawgetp(lua_State luaState, int index, voidptr_t p);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern size_t lua_rawlen(lua_State luaState, int index);
+        internal static extern lua_Unsigned lua_rawlen(lua_State luaState, int index);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_rawset(lua_State luaState, int index);
